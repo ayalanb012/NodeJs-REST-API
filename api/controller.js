@@ -1,9 +1,8 @@
-
 const StatsEntry = require("../modules/statsEntry");
 const PrevIP = require("../modules/prevIP");
 var getIP = require('ipware')().get_ip;
 
-exports.get_prev_count = (req, res, next) => {
+exports.get_prev_count = (req, res) => {
   StatsEntry.find({requestType: 'PREV'})
   .select("counter")
   .exec()
@@ -24,7 +23,7 @@ exports.get_prev_count = (req, res, next) => {
 };
 
 
-exports.get_stats = (req, res, next) => {
+exports.get_stats = (req, res) => {
   StatsEntry.find()
   .select("requestType clientIP counter")
   .exec()
@@ -51,7 +50,7 @@ exports.get_stats = (req, res, next) => {
 };
 
 
-exports.get_prev_ip = (req, res, next) => {
+exports.get_prev_ip = (req, res) => {
   const ip =  getIP(req).clientIp;
    PrevIP.findOne().exec(function (err, prevIP){    
     if (err || prevIP == null){
